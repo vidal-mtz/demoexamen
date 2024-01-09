@@ -1,18 +1,16 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 
 @Entity
 @Table(name = "TBL_PRODUCTOS")
 public class Producto {
 	@Id
 	@Column(name = "ID_PRODUCTO")
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long idProducto;
 
 	@Column(name = "PRO_CLAVE", length = 15, nullable = false)

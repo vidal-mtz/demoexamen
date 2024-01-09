@@ -3,17 +3,18 @@ package com.example.demo.entity;
 import java.time.LocalDate;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 
 @Entity
 @Table(name = "TBL_LISTA_COMPRA")
@@ -24,7 +25,7 @@ public class ListaCompra {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long idLista;
 
-	@ManyToOne(optional = false, cascade = CascadeType.ALL,  fetch = FetchType.EAGER)
+	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "LIS_ID_CLIENTE", nullable = false)
 	private Cliente cliente;
 
@@ -39,9 +40,9 @@ public class ListaCompra {
 
 	@Column(name = "LIS_ACTIVO")
 	private boolean activo;
-	
-//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "compra")
-//	private List<Detalle> detalle;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "id.compra")
+	private List<Detalle> detalle;
 
 	public long getIdLista() {
 		return idLista;
@@ -91,11 +92,11 @@ public class ListaCompra {
 		this.activo = activo;
 	}
 
-//	public List<Detalle> getDetalle() {
-//		return detalle;
-//	}
-//
-//	public void setDetalle(List<Detalle> detalle) {
-//		this.detalle = detalle;
-//	}
+	public List<Detalle> getDetalle() {
+		return detalle;
+	}
+
+	public void setDetalle(List<Detalle> detalle) {
+		this.detalle = detalle;
+	}
 }

@@ -7,7 +7,7 @@ import com.example.demo.dto.CompraDto;
 public interface ComprasService {
 	void guardar(CompraDto compra);
 
-	List<CompraDto> recuperaCompras(String cliente);
+	List<CompraDto> recuperaCompras(long cliente);
 
 	void actualiza(CompraDto compra);
 

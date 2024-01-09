@@ -7,6 +7,9 @@ public class ProductoDto {
 	private String descripcion;
 	private boolean activo;
 
+	public ProductoDto() {
+	}
+
 	public ProductoDto(long idProducto, String clave, String descripcion, boolean activo) {
 		this.idProducto = idProducto;
 		this.clave = clave;

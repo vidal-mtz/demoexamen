@@ -1,6 +1,8 @@
 package com.example.demo.dto;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CompraDto {
 	private long idLista;
@@ -9,16 +11,21 @@ public class CompraDto {
 	private LocalDate fechaRegistro;
 	private LocalDate fechaUltimaActualizacion;
 	private boolean activo;
+	private List<DetalleDto> detalle;
+
+	public CompraDto() {
+		setDetalle(null);
+	}
 
 	public CompraDto(long idLista, ClienteDto cliente, String nombre, LocalDate fechaRegistro,
 			LocalDate fechaUltimaActualizacion, boolean activo) {
-		super();
 		this.idLista = idLista;
 		this.cliente = cliente;
 		this.nombre = nombre;
 		this.fechaRegistro = fechaRegistro;
 		this.fechaUltimaActualizacion = fechaUltimaActualizacion;
 		this.activo = activo;
+		setDetalle(null);
 	}
 
 	public long getIdLista() {
@@ -69,6 +76,17 @@ public class CompraDto {
 		this.activo = activo;
 	}
 
+	public List<DetalleDto> getDetalle() {
+		return detalle;
+	}
+
+	public void setDetalle(List<DetalleDto> detalle) {
+		if (detalle == null)
+			this.detalle = new ArrayList<>();
+		else
+			this.detalle = detalle;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -78,6 +96,8 @@ public class CompraDto {
 		builder.append(cliente);
 		builder.append(", nombre=");
 		builder.append(nombre);
+		builder.append(", detalle=");
+		builder.append(detalle);
 		builder.append(", fechaRegistro=");
 		builder.append(fechaRegistro);
 		builder.append(", fechaUltimaActualizacion=");
@@ -87,5 +107,4 @@ public class CompraDto {
 		builder.append("]");
 		return builder.toString();
 	}
-
 }

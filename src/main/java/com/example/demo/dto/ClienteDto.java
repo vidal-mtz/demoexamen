@@ -6,6 +6,9 @@ public class ClienteDto {
 	private String nombre;
 	private boolean activo;
 
+	public ClienteDto() {
+	}
+
 	public ClienteDto(long idCliente, String nombre, boolean activo) {
 		this.idCliente = idCliente;
 		this.nombre = nombre;
