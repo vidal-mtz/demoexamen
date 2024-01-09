@@ -7,6 +7,8 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,7 @@ import com.example.demo.service.ComprasService;
 
 @Service
 public class ComprasServiceImpl implements ComprasService {
+	private static final Logger LOGGER = LogManager.getLogger(ComprasServiceImpl.class);
 
 	@Autowired
 	private ProductoData productoData;
@@ -48,12 +51,12 @@ public class ComprasServiceImpl implements ComprasService {
 	@Override
 	@Transactional
 	public void guardar(CompraDto compra) {
-		System.out.println(compra);
+		LOGGER.info(compra);
 
 		ListaCompra antCompra = compraData.findFistByNombre(compra.getNombre());
 
 		if (antCompra != null) {
-			System.out.println("ya existe lista " + compra.getNombre());
+			LOGGER.info("ya existe lista {}", compra.getNombre());
 			return;
 		}
 
@@ -65,8 +68,6 @@ public class ComprasServiceImpl implements ComprasService {
 			newCliente.setIdCliente(compra.getCliente().getIdCliente());
 			newCliente.setNombre(compra.getCliente().getNombre());
 			newCliente.setActivo(true);
-//			clienteData.save(newCliente);
-//			System.out.println("Se guardo cliente");
 
 			newCompra.setCliente(newCliente);
 		} else
@@ -91,7 +92,7 @@ public class ComprasServiceImpl implements ComprasService {
 				newProducto.setDescripcion(prod.getProducto().getDescripcion());
 				newProducto.setActivo(true);
 				productoData.save(newProducto);
-				System.out.println("Se guardo producto");
+				LOGGER.info("Se guardo producto {}", prod.getProducto().getIdProducto());
 
 				detId = new DetalleId(newCompra, newProducto);
 			} else
@@ -104,7 +105,7 @@ public class ComprasServiceImpl implements ComprasService {
 		newCompra.setDetalle(list);
 
 		compraData.save(newCompra);
-		System.out.println("Se guardo la nueva lista");
+		LOGGER.info("Se guardo la nueva lista {}", compra.getNombre());
 	}
 
 	@Override
@@ -119,7 +120,7 @@ public class ComprasServiceImpl implements ComprasService {
 			for (ListaCompra compra : lista) {
 				result.add(this.mapper.map(compra, CompraDto.class));
 
-				System.out.println("Elemento " + compra.getNombre());
+				LOGGER.info("Elemento {}", compra.getNombre());
 			}
 
 		}
@@ -128,12 +129,12 @@ public class ComprasServiceImpl implements ComprasService {
 
 	@Override
 	public void actualiza(CompraDto compra) {
-		System.out.println(compra);
+		LOGGER.info(compra);
 
 		Optional<ListaCompra> antCompra = compraData.findById(compra.getIdLista());
 
 		if (!antCompra.isPresent()) {
-			System.out.println("No se encontro la lista " + compra.getIdLista());
+			LOGGER.info("No se encontro la lista {}", compra.getIdLista());
 			return;
 		}
 
@@ -157,7 +158,7 @@ public class ComprasServiceImpl implements ComprasService {
 				newProducto.setActivo(true);
 
 				productoData.save(newProducto);
-				System.out.println("Se guardo producto");
+				LOGGER.info("Se guardo producto");
 
 				detId = new DetalleId(newCompra, newProducto);
 
@@ -179,7 +180,7 @@ public class ComprasServiceImpl implements ComprasService {
 		}
 
 		compraData.save(newCompra);
-		System.out.println("Se actualizo la lista");
+		LOGGER.info("Se actualizo la lista {}", compra.getIdLista());
 	}
 
 	@Override
@@ -188,7 +189,7 @@ public class ComprasServiceImpl implements ComprasService {
 
 		if (encontrada.isPresent()) {
 			compraData.delete(encontrada.get());
-			System.out.println("Se elimino lista " + encontrada.get().getNombre());
+			LOGGER.info("Se elimino lista {}", encontrada.get().getNombre());
 		}
 	}
 
